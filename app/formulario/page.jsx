@@ -1,7 +1,7 @@
 "use client"
 import {useEffect, useState} from  "react"
 import { Html5QrcodeScanner } from "html5-qrcode"
-import { useSearchParams } from "next/navigation"
+import { redirect, useSearchParams } from "next/navigation"
 
 const PageForm = () => {
 
@@ -66,12 +66,13 @@ const PageForm = () => {
         function succes (result){
             scanner.clear;
             setScanResult(result)
+            window.location.href = result;
         }
     
         function error (err){
             console.warn(err)
         }
-    },)
+    },[])
 
 
 
@@ -90,9 +91,11 @@ const PageForm = () => {
                         })
                     }
                 </div>
-
-
                 <div id="reader" className="max-w-[250px] "></div>
+
+                { scanResult ? <div>Abrir Lector QR</div> :  <div id="reader" className="max-w-[250px] "></div> }
+
+
                 <h2 className="text-center mt-5">Detalles del viaje</h2>
                 <div className="w-full flex flex-col mb-2">
                     <label className="font-semibold text-xl ">Supervisor</label>
